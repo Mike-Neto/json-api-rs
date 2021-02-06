@@ -11,6 +11,7 @@ use rocket::data::{self, Data, FromData};
 use rocket::http::Status;
 use rocket::outcome::Outcome;
 use rocket::request::{self, FromRequest, Request};
+use rocket::data::ToByteUnit;
 
 #[derive(Debug)]
 pub struct Create<T: DeserializeOwned>(pub T);
@@ -36,11 +37,12 @@ impl<T: DeserializeOwned> DerefMut for Create<T> {
     }
 }
 
+#[rocket::async_trait]
 impl<T: DeserializeOwned> FromData for Create<T> {
     type Error = Error;
-
-    fn from_data(_: &Request, data: Data) -> data::Outcome<Self, Self::Error> {
-        let reader = data.open();
+    
+    async fn from_data(request: &Request<'_>, data: Data) -> data::Outcome<Self, Self::Error> {
+        let reader = data.open(2.megabytes());
 
         match json_api::from_reader::<_, NewObject, _>(reader) {
             Ok(value) => Outcome::Success(Create(value)),
@@ -73,11 +75,12 @@ impl<T: DeserializeOwned> DerefMut for Update<T> {
     }
 }
 
+#[rocket::async_trait]
 impl<T: DeserializeOwned> FromData for Update<T> {
     type Error = Error;
 
-    fn from_data(_: &Request, data: Data) -> data::Outcome<Self, Self::Error> {
-        let reader = data.open();
+    async fn from_data(request: &Request<'_>, data: Data) -> data::Outcome<Self, Self::Error> {
+        let reader = data.open(2.megabytes());
 
         match json_api::from_reader::<_, Object, _>(reader) {
             Ok(value) => Outcome::Success(Update(value)),
@@ -134,10 +137,11 @@ impl DerefMut for Query {
     }
 }
 
+#[rocket::async_trait]
 impl<'a, 'r> FromRequest<'a, 'r> for Query {
     type Error = Error;
 
-    fn from_request(req: &'a Request<'r>) -> request::Outcome<Self, Self::Error> {
+    async fn from_request(req: &'a Request<'r>) -> request::Outcome<Self, Self::Error> {
         match req.uri().query().map(query::from_str) {
             Some(Ok(inner)) => Outcome::Success(Query { inner }),
             Some(Err(e)) => fail(e),
@@ -147,11 +151,5 @@ impl<'a, 'r> FromRequest<'a, 'r> for Query {
 }
 
 fn fail<T, F>(e: Error) -> Outcome<T, (Status, Error), F> {
-    use config::ROCKET_ENV;
-
-    if !ROCKET_ENV.is_prod() {
-        eprintln!("{:?}", e);
-    }
-
     Outcome::Failure((Status::BadRequest, e))
 }

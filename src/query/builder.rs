@@ -1,8 +1,8 @@
 use std::mem;
 
-use error::Error;
-use query::{Direction, Page, Query, Sort};
-use value::{Key, Map, Path, Set, Value};
+use crate::error::Error;
+use crate::query::{Direction, Page, Query, Sort};
+use crate::value::{Key, Map, Path, Set, Value};
 
 /// An implementation of the "builder pattern" that can be used to construct a
 /// new query.

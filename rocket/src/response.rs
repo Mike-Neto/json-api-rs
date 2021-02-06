@@ -4,12 +4,12 @@ use std::ops::{Deref, DerefMut};
 
 use json_api::doc::Object;
 use json_api::{self, Error, Resource};
-use rocket::Outcome;
+use rocket::outcome::Outcome;
 use rocket::http::Status;
 use rocket::request::{FromRequest, Request};
 use rocket::response::{Responder, Response};
 
-use request::Query;
+use crate::request::Query;
 
 #[derive(Debug)]
 pub struct Collection<T: Resource>(pub Vec<T>);
@@ -46,7 +46,7 @@ impl<T: Resource> FromIterator<T> for Collection<T> {
     }
 }
 
-impl<T: Resource> Responder<'static> for Collection<T> {
+impl<T: Resource> Responder<'static, 'static> for Collection<T> {
     fn respond_to(self, request: &Request) -> Result<Response<'static>, Status> {
         let query = match Query::from_request(request) {
             Outcome::Success(value) => Some(value.into_inner()),
@@ -85,7 +85,7 @@ impl<T: Resource> DerefMut for Created<T> {
     }
 }
 
-impl<T: Resource> Responder<'static> for Created<T> {
+impl<T: Resource> Responder<'static, 'static> for Created<T> {
     fn respond_to(self, request: &Request) -> Result<Response<'static>, Status> {
         let query = match Query::from_request(request) {
             Outcome::Success(value) => Some(value.into_inner()),
@@ -128,7 +128,7 @@ impl<T: Resource> DerefMut for Member<T> {
     }
 }
 
-impl<T: Resource> Responder<'static> for Member<T> {
+impl<T: Resource> Responder<'static, 'static> for Member<T> {
     fn respond_to(self, request: &Request) -> Result<Response<'static>, Status> {
         let query = match Query::from_request(request) {
             Outcome::Success(value) => Some(value.into_inner()),
@@ -144,17 +144,11 @@ impl<T: Resource> Responder<'static> for Member<T> {
 pub(crate) fn with_body(body: Vec<u8>) -> Response<'static> {
     Response::build()
         .raw_header("Content-Type", "application/vnd.api+json")
-        .sized_body(Cursor::new(body))
+        .sized_body(body.len(), Cursor::new(body))
         .finalize()
 }
 
 #[cfg_attr(feature = "cargo-clippy", allow(needless_pass_by_value))]
 pub(crate) fn fail(e: Error) -> Result<Response<'static>, Status> {
-    use config::ROCKET_ENV;
-
-    if !ROCKET_ENV.is_prod() {
-        eprintln!("{:?}", e);
-    }
-
     Err(Status::InternalServerError)
 }

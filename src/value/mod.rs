@@ -13,7 +13,7 @@ use std::str::FromStr;
 use serde::de::{Deserialize, Deserializer, Visitor};
 use serde::ser::{Serialize, Serializer};
 
-use error::Error;
+use crate::error::Error;
 
 pub use serde_json::value::Number;
 

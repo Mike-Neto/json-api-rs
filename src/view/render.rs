@@ -1,6 +1,6 @@
-use doc::{Data, Document, PrimaryData};
-use error::Error;
-use query::Query;
+use crate::doc::{Data, Document, PrimaryData};
+use crate::error::Error;
+use crate::query::Query;
 
 /// A trait to render a given type as a document.
 ///

@@ -11,8 +11,8 @@ use serde::de::{Deserialize, Deserializer, MapAccess, Visitor};
 use serde::ser::{Serialize, SerializeStruct, Serializer};
 use serde_qs;
 
-use error::Error;
-use value::{Key, Map, Path, Set, Value};
+use crate::error::Error;
+use crate::value::{Key, Map, Path, Set, Value};
 
 pub use self::builder::Builder;
 pub use self::page::Page;

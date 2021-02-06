@@ -8,8 +8,8 @@ use http::Uri;
 use serde::de::{self, Deserialize, Deserializer, MapAccess, Visitor};
 use serde::ser::{Serialize, SerializeStruct, Serializer};
 
-use error::Error;
-use value::Map;
+use crate::error::Error;
+use crate::value::Map;
 
 /// A data structure containing a URL. Can be deserialized from either a string or link
 /// object.

@@ -14,11 +14,11 @@ use std::iter::FromIterator;
 use serde::de::DeserializeOwned;
 use serde::ser::Serialize;
 
-use error::Error;
-use query::Query;
-use sealed::Sealed;
-use value::{Key, Map, Set, Value};
-use view::Render;
+use crate::error::Error;
+use crate::query::Query;
+use crate::sealed::Sealed;
+use crate::value::{Key, Map, Set, Value};
+use crate::view::Render;
 
 pub use self::convert::*;
 pub use self::error::{ErrorObject, ErrorSource};
@@ -32,7 +32,7 @@ pub use self::specification::{JsonApi, Version};
 /// document.
 pub trait PrimaryData: DeserializeOwned + Sealed + Serialize {
     #[doc(hidden)]
-    fn flatten(self, &Set<Object>) -> Value;
+    fn flatten(self, incl: &Set<Object>) -> Value;
 }
 
 /// Represents a compound JSON API document.

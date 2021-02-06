@@ -6,8 +6,8 @@ use std::str::FromStr;
 use serde::de::{self, Deserialize, Deserializer, Visitor};
 use serde::ser::{Serialize, Serializer};
 
-use error::Error;
-use sealed::Sealed;
+use crate::error::Error;
+use crate::sealed::Sealed;
 
 /// Represents a single member name.
 ///

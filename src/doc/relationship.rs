@@ -1,7 +1,7 @@
 use std::iter::FromIterator;
 
-use doc::{Data, Identifier, Link};
-use value::{Key, Map};
+use crate::doc::{Data, Identifier, Link};
+use crate::value::{Key, Map};
 
 /// Represents a resource's relationship to another.
 ///

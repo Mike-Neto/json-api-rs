@@ -12,8 +12,8 @@ use ordermap::{self, OrderMap};
 use serde::de::{Deserialize, Deserializer};
 use serde::ser::{Serialize, Serializer};
 
-use value::collections::Equivalent;
-use value::{Key, Value};
+use crate::value::collections::Equivalent;
+use crate::value::{Key, Value};
 
 /// A hash map implementation with consistent ordering.
 #[derive(Clone, Eq, PartialEq)]

@@ -5,9 +5,9 @@ use std::str::FromStr;
 use serde::de::{Deserialize, Deserializer};
 use serde::ser::{Serialize, Serializer};
 
-use error::Error;
-use query::Path;
-use sealed::Sealed;
+use crate::error::Error;
+use crate::query::Path;
+use crate::sealed::Sealed;
 
 /// A single sort instruction containing a direction and field path.
 #[derive(Clone, Debug, Eq, Hash, PartialEq)]
@@ -225,7 +225,7 @@ impl Neg for Direction {
 #[cfg(test)]
 mod tests {
     use super::{Direction, Sort};
-    use value::Path;
+    use crate::value::Path;
 
     #[test]
     fn direction_is_asc() {

@@ -10,11 +10,11 @@ use std::str::FromStr;
 use serde::de::{Deserialize, Deserializer, SeqAccess, Visitor};
 use serde::ser::{Serialize, SerializeSeq, Serializer};
 
-use error::Error;
-use sealed::Sealed;
-use value::Key;
-use value::collections::Equivalent;
-use value::collections::map::{self, Keys, Map};
+use crate::error::Error;
+use crate::sealed::Sealed;
+use crate::value::Key;
+use crate::value::collections::Equivalent;
+use crate::value::collections::map::{self, Keys, Map};
 
 /// A hash set implemented as a `Map` where the value is `()`.
 #[derive(Clone, Eq, PartialEq)]

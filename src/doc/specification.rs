@@ -4,8 +4,8 @@ use std::str::FromStr;
 use serde::de::{Deserialize, Deserializer, Error as DeError};
 use serde::ser::{Serialize, Serializer};
 
-use error::Error;
-use value::Map;
+use crate::error::Error;
+use crate::value::Map;
 
 /// Information about this implementation of the specification.
 ///

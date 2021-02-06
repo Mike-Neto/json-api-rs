@@ -1,13 +1,13 @@
 use json_api::http::StatusCode;
 use rocket::http::Status;
-use rocket::{Catcher, Error as RocketError, Request, Response};
+use rocket::{Catcher, Request, Response};
 
-use response;
+use crate::response;
 
 macro_rules! catchers {
     ({ $($status:expr => $name:ident),* }) => {
         $(pub fn $name(
-            _: RocketError,
+            _: rocket::error::Error,
             _req: &Request,
         ) -> Result<Response<'static>, Status> {
             use json_api;

@@ -8,9 +8,9 @@ use std::str::FromStr;
 use serde::de::{Deserialize, Deserializer};
 use serde::ser::{Serialize, Serializer};
 
-use error::Error;
-use sealed::Sealed;
-use value::Key;
+use crate::error::Error;
+use crate::sealed::Sealed;
+use crate::value::Key;
 
 /// Represents a dot-separated list of member names.
 ///

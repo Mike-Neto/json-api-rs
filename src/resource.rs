@@ -1,11 +1,11 @@
 use std::mem;
 
-use doc::{Data, Document, Identifier, Object};
-use error::Error;
-use query::Query;
-use value::Set;
-use value::fields::Key;
-use view::{Context, Render};
+use crate::doc::{Data, Document, Identifier, Object};
+use crate::error::Error;
+use crate::query::Query;
+use crate::value::Set;
+use crate::value::fields::Key;
+use crate::view::{Context, Render};
 
 /// A trait indicating that the given type can be represented as a resource.
 ///

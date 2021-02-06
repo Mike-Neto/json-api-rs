@@ -2,12 +2,12 @@ use std::cmp::{Eq, PartialEq};
 use std::hash::{Hash, Hasher};
 use std::mem;
 
-use doc::{Data, Document, Object, PrimaryData};
-use error::Error;
-use query::Query;
-use sealed::Sealed;
-use value::{Key, Map, Set, Value};
-use view::Render;
+use crate::doc::{Data, Document, Object, PrimaryData};
+use crate::error::Error;
+use crate::query::Query;
+use crate::sealed::Sealed;
+use crate::value::{Key, Map, Set, Value};
+use crate::view::Render;
 
 /// Identifies an individual resource. Commonly found in an object's relationships.
 ///

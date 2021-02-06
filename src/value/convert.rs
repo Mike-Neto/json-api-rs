@@ -4,8 +4,8 @@ use serde::de::DeserializeOwned;
 use serde::ser::Serialize;
 use serde_json::{self, Value as JsonValue};
 
-use error::Error;
-use value::Value;
+use crate::error::Error;
+use crate::value::Value;
 
 /// Convert a `T` into a `Value`.
 pub fn to_value<T>(value: T) -> Result<Value, Error>
